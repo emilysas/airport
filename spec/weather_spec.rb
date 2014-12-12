@@ -9,20 +9,20 @@ require 'weather'
 describe Weather do
 
   let(:plane){double :plane}
-  let(:airport){double :airport}
+  let(:airport){double :airport, clear_for_takeoff: false}
 
   context 'weather conditions' do
 
     before {allow(airport).to receive(:playing_god){@stormy = true}}
 
-      it 'a plane cannot take off when there is a storm brewing' do
-        allow(plane).to receive(:take_off)
-        allow(airport).to receive(:request_takeoff).with(plane)
-        @stormy = true
-        expect{airport.request_takeoff(plane)}.to raise_error(RuntimeError, "Storms ahead, plane not clear for takeoff")
+      xit 'a plane cannot take off when there is a storm brewing' do
+        allow(airport).to receive(:request_takeoff).with plane
+        expect(lambda { airport.request_takeoff(plane) }).to raise_error(RuntimeError, "Storms ahead, plane not cleared for takeoff")
       end
 
       xit 'a plane cannot land in the middle of a storm' do
+        allow(airport).to receive(:request_takeoff).with plane
+        expect(lambda { airport.request_takeoff(plane) }).to raise_error(RuntimeError, "Storms ahead, plane not cleared for landing")
        
       end
 

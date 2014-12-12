@@ -7,13 +7,15 @@ require 'plane'
 describe Plane do
 
   let(:plane) { Plane.new }
+  let(:airport) {double :airport}
 
-  xit 'has a flying status when created' do
-
+  it 'has a flying status when created' do
+    expect(plane).not_to be_flying
   end
   
-  xit 'has a flying status when in the air' do
-  
+  it 'has a flying status when in the air' do
+    plane.take_off(from: airport)
+    expect(plane).to be_flying
   end
   
   xit 'can take off' do

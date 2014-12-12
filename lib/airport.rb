@@ -20,18 +20,18 @@ class Airport
 
   def receive(plane)
     raise "Plane cannot land, the airport is full" if full?
-    raise "Storms ahead, plane not clear for landing" unless clear_for_takeoff?
+    raise "Storms ahead, plane not cleared for landing" unless clear_weather?
     planes << plane
     plane.land
   end
 
   def request_takeoff(plane) 
-    raise "Storms ahead, plane not clear for takeoff" unless clear_for_takeoff?
+    raise "Storms ahead, plane not cleared for takeoff" unless clear_weather?
     plane.take_off
     planes.delete(plane)
   end 
   
-  def clear_for_takeoff?
+  def clear_weather?
     playing_god
     @stormy ? false : true
   end

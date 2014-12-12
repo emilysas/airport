@@ -6,55 +6,27 @@ describe Airport do
   
   context 'taking off and landing' do
 
-    #before{@stormy = false}
+    before {allow(airport).to receive(:playing_god){@stormy = true}}
 
     it 'a plane can land' do
       expect(plane).to receive(:land)
-      @stormy = false
       airport.receive(plane)
     end
 
     it 'a plane can take off' do
       expect(plane).to receive(:take_off)
-      @stormy = false
       airport.request_takeoff(plane)
     end
 
   end
 
   context 'traffic control' do
-
-    #before{@stormy = false}
+    before {allow(airport).to receive(:playing_god){@stormy = true}}
 
     it 'a plane cannot land if the airport is full' do
-          @stormy = false
-          allow(plane).to receive(:land)
-          expect{51.times{airport.receive(plane)}}.to raise_error(RuntimeError, "Plane cannot land, the airport is full")
+      allow(plane).to receive(:land)
+      expect{51.times{airport.receive(plane)}}.to raise_error(RuntimeError, "Plane cannot land, the airport is full")
     end
 
-  
-# Include a weather condition using a module.
-# The weather must be random and only have two states "sunny" or "stormy".
-# Try and take off a plane, but if the weather is stormy, the plane can not take off and must remain in the airport.
-#
-# This will require stubbing to stop the random return of the weather.
-# If the airport has a weather condition of stormy,
-# the plane can not land, and must not be in the airport
-
-    # context 'weather conditions' do
-
-    #   before {allow(airport).to receive(:playing_god){@stormy = true}}
-
-    #   it 'a plane cannot take off when there is a storm brewing' do
-    #     allow(plane).to receive(:take_off)
-    #     @stormy
-    #     expect{airport.request_takeoff(plane)}.to raise_error(RuntimeError, "Storms ahead, plane not clear for takeoff")
-    #   end
-
-    #   xit 'a plane cannot land in the middle of a storm' do
-       
-    #   end
-
-    # end
   end
 end
