@@ -36,7 +36,7 @@ let(:planes){Array.new([:harrier, :jumbo_jet, :concorde, :millenium_falcon, :ent
       expect(lambda { planes.each {|plane| airport.receive(plane)} }).to change{airport.plane_count}.from(0).to(6)
     end
 
-    it 'landed planes must have status "landed"' do
+    xit 'landed planes must have status "landed"' do
       harrier.take_off(airport)
       expect{harrier.land(airport)}.to change{harrier.flying?}.to (false)
     end
