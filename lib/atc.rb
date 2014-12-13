@@ -25,8 +25,9 @@ def process(selection)
       @plane.flying? ? "This plane is already in the air" : @plane.take_off(@airport)
     when "3"
       select_plane
+      # this doesn't work - I think it's because the message from @plane doesn't go to the actual plane object
+      @plane.flying? ? "This plane is already in the air" : @plane.take_off(@airport)
       @plane.flying? ? @plane.take_off(@airport) : "This plane is not currently flying"
-      @plane.land(@airport)
     when "4"
       exit
     else

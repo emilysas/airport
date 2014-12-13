@@ -9,6 +9,7 @@ class Airport
 
   def initialize(options = {})
     self.capacity = options.fetch(:capacity, capacity)
+    self.clear_weather = options.fetch(:clear_weather, true)
   end
 
   def capacity
@@ -29,10 +30,14 @@ class Airport
     raise "Storms ahead, plane not cleared for takeoff" unless clear_weather?
     planes.delete(plane)
   end 
+
+  def clear_weather
+    @clear_weather
+  end
   
   def clear_weather?
     playing_god
-    @stormy ? false : true
+    @clear_weather = ! @stormy
   end
 
   def full?
