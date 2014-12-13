@@ -1,3 +1,4 @@
+require_relative 'plane'
 require 'weather'
 
 class Airport 
@@ -21,13 +22,11 @@ class Airport
   def receive(plane)
     raise "Plane cannot land, the airport is full" if full?
     raise "Storms ahead, plane not cleared for landing" unless clear_weather?
-    planes << plane
-    plane.land
+    @planes << plane
   end
 
   def request_takeoff(plane) 
     raise "Storms ahead, plane not cleared for takeoff" unless clear_weather?
-    plane.take_off
     planes.delete(plane)
   end 
   

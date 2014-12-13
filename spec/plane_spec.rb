@@ -9,21 +9,20 @@ describe Plane do
   let(:plane) { Plane.new }
   let(:airport) {double :airport}
 
-  it 'has a flying status when created' do
-    expect(plane).not_to be_flying
-  end
-  
-  it 'has a flying status when in the air' do
-    plane.take_off(from: airport)
-    expect(plane).to be_flying
-  end
-  
-  xit 'can take off' do
-  
-  end
-  
-  xit 'changes its status to flying after taking of' do
-  
-  end
+  before {allow(airport).to receive(:playing_god){@stormy = false}}
+
+    it 'has a flying status when created' do
+      expect(plane).not_to be_flying
+    end
+      
+    it 'can take off' do
+      expect(airport).to receive(:request_takeoff).with(plane)
+      plane.take_off(airport)
+    end
+    
+    it 'changes its status to flying after taking of' do
+      allow(airport).to receive(:request_takeoff).with(plane)
+      expect(lambda {plane.take_off(airport)}).to change{plane.flying?}.from(false).to(true)
+    end
 
 end
