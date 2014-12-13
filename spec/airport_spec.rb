@@ -34,7 +34,8 @@ describe Airport do
 
       xit 'a plane cannot take off when there is a storm brewing' do
         airport.receive(plane)
-        expect{airport.request_takeoff(plane)}.not_to change{airport.plane_count}
+        expect(airport.clear_weather?).to be(false)
+        
       end
 
       xit 'a plane cannot land in the middle of a storm' do

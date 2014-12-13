@@ -8,17 +8,18 @@ class Plane
 
   def flying?
     @flying
-    puts "landed" unless @flying == true
   end
 
   def take_off(airport)
     airport.request_takeoff(self)
     @flying = true
+    puts "flying"
   end
 
   def land(airport)
     airport.receive(self)
     @flying = false
+    puts "landed"
   end
 
 end
