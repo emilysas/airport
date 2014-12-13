@@ -1,6 +1,16 @@
 require_relative 'airport'
 require_relative 'plane'
 
+
+@harrier = Plane.new
+@concorde = Plane.new
+@jumbo = Plane.new
+@enterprise = Plane.new
+@millenium_falcon = Plane.new
+@jet = Plane.new
+@airport = Airport.new
+
+
 def interactive_menu
   loop do
   print_menu
@@ -21,13 +31,10 @@ def process(selection)
       puts "There are #{@airport.plane_count} planes at the airport"
     when "2"
       select_plane
-      # this doesn't work - I think it's because the message from @plane doesn't go to the actual plane object
-      @plane.flying? ? "This plane is already in the air" : @plane.take_off(@airport)
+      airport_clear_for_takeoff(@choice)
     when "3"
       select_plane
-      # this doesn't work - I think it's because the message from @plane doesn't go to the actual plane object
-      @plane.flying? ? "This plane is already in the air" : @plane.take_off(@airport)
-      @plane.flying? ? @plane.take_off(@airport) : "This plane is not currently flying"
+      airport_receive(@choice)
     when "4"
       exit
     else
@@ -35,20 +42,40 @@ def process(selection)
   end
 end
 
-def select_plane
-  planes = ["Harrier", "Concorde", "Jumbo"]
-  puts "Please select from the follow planes: #{planes.to_s}"
-  answer = STDIN.gets.chomp
-  plane = '@'+answer.downcase
-  @plane = instance_variable_get(plane)
+def select_plane  
+  puts "Please select from the follow planes: Harrier, Concorde, Jumbo, Jet, Millenium Falcon, Enterprise"
+  which_plane(STDIN.gets.chomp)
 end
 
-@harrier = Plane.new
-@concorde = Plane.new
-@jumbo = Plane.new
+def which_plane(selection)
+  case selection
+    when "Harrier"
+      @choice = @harrier
+    when "Concorde"
+      @choice = @concorde
+    when "Jumbo"
+      @choice = @jumbo
+    when "Jet"
+      @choice = @jet
+    when "Millenium Falcon"
+      @choice = @millenium_falcon
+    when "Enterprise"
+      @choice = @enterprise
+    else 
+      "We're unaware of a plane of that name"
+  end
+end
 
-@airport = Airport.new
+def airport_clear_for_takeoff(plane)
+  plane.flying? ? "This plane is already in the air" : plane.take_off!(@airport)
+end
+
+def airport_receive(plane)
+  plane.flying? ? plane.land!(@airport) : "This plane is not currently flying"
+end
+
 interactive_menu
+
 
 #need a way to keep track of planes
 #need a way to make sure you can't land a plane twice(without it flying in between)
