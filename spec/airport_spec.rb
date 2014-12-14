@@ -1,4 +1,5 @@
-require 'airport'
+require_relative 'airport'
+
 
 describe Airport do
   let(:sunny_airport) {Airport.new(:capacity => 50)}

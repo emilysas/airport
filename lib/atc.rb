@@ -1,6 +1,6 @@
+require_relative 'weather'
 require_relative 'airport'
 require_relative 'plane'
-
 
 @harrier = Plane.new
 @concorde = Plane.new
@@ -9,7 +9,6 @@ require_relative 'plane'
 @millenium_falcon = Plane.new
 @jet = Plane.new
 @airport = Airport.new
-
 
 def interactive_menu
   loop do
@@ -49,29 +48,22 @@ end
 
 def which_plane(selection)
   @choice = case selection
-            when "Harrier"
-              @harrier
-            when "Concorde"
-              @concorde
-            when "Jumbo"
-              @jumbo
-            when "Jet"
-              @jet
-            when "Millenium Falcon"
-              @millenium_falcon
-            when "Enterprise"
-              @enterprise
-            else 
-              "We're unaware of a plane of that name"
-          end
+            when "Harrier" then @harrier
+            when "Concorde" then @concorde
+            when "Jumbo" then @jumbo
+            when "Jet" then @jet
+            when "Millenium Falcon" then @millenium_falcon
+            when "Enterprise" then @enterprise
+            else "We're unaware of a plane of that name"
+            end
 end
 
-def airport_clear_for_takeoff(plane)
-  plane.flying? ? "This plane is already in the air" : plane.take_off!(@airport)
+def airport_clear_for_takeoff plane from: airport
+  plane.flying? ? "This plane is already in the air" : plane.take_off!(airport)
 end
 
-def airport_receive(plane)
-  plane.flying? ? plane.land!(@airport) : "This plane is not currently flying"
+def airport_receive plane from: airport
+  plane.flying? ? plane.land!(airport) : "This plane is not currently flying"
 end
 
 interactive_menu
