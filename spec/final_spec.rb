@@ -17,7 +17,7 @@ let(:planes){Array.new([harrier, jumbo_jet, concorde, millenium_falcon, enterpri
   
   context 'weather is stormy' do
 
-    before {allow(stormy_airport).to receive(:clear_for_takeoff?){@clear_weather = false}}
+    before {allow(stormy_airport).to receive(:clear?){@clear_weather = false}}
       
       it 'planes cannot land if stormy' do
         expect(lambda { planes.each {|plane| stormy_airport.receive(plane)} }).not_to change{stormy_airport.plane_count}

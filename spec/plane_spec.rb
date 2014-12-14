@@ -5,7 +5,7 @@ describe Plane do
   let(:plane) { Plane.new }
   let(:airport) {double :airport}
 
-  before {allow(airport).to receive(:clear_for_takeoff?){@clear_weather = true}}
+  before {allow(airport).to receive(:clear?){@clear_weather = true}}
 
     it 'has a flying status when created' do
       expect(plane).not_to be_flying

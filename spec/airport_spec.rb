@@ -26,15 +26,15 @@ describe Airport do
 
       it 'a plane cannot land if the airport is full' do
         allow(plane).to receive(:land!).with(sunny_airport)
-        expect{51.times{sunny_airport.receive(plane)}}.not_to change{sunny_airport.plane_count}
+        50.times{sunny_airport.receive(plane)}
+        expect{sunny_airport.receive(plane)}.not_to change{sunny_airport.plane_count}
       end
   end
 
 
   context 'weather conditions' do
 
-    before {allow(stormy_airport).to receive(:clear_for_takeoff?){@clear_weather = false}}
-
+    before {allow(stormy_airport).to receive(:clear?){@clear_weather = false}}
 
       it 'a plane cannot take off when there is a storm brewing' do
         expect{ stormy_airport.request_takeoff(plane) }.not_to change{stormy_airport.plane_count}

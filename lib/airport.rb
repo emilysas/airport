@@ -26,8 +26,8 @@ class Airport
 
   def receive(plane)
     if full? 
-      full_error
-    elsif clear_for_takeoff?
+      full_error("land")
+    elsif clear? == false
       stormy_error("takeoff")  
     else
       puts "Cleared for landing"
@@ -37,8 +37,8 @@ class Airport
   end
 
   def request_takeoff(plane) 
-    if clear_for_takeoff?
-      stormy_error("land") 
+    if clear? == false
+      stormy_error("takeoff") 
     else
       puts "Cleared for takeoff"
       planes.delete(plane)
@@ -62,7 +62,7 @@ class Airport
       end
   end
 
-  def clear_for_takeoff?
+  def clear?
     playing_god
     @stormy ? @clear_weather = false : @clear_weather = true
   end
