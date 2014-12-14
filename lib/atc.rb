@@ -48,22 +48,22 @@ def select_plane
 end
 
 def which_plane(selection)
-  case selection
-    when "Harrier"
-      @choice = @harrier
-    when "Concorde"
-      @choice = @concorde
-    when "Jumbo"
-      @choice = @jumbo
-    when "Jet"
-      @choice = @jet
-    when "Millenium Falcon"
-      @choice = @millenium_falcon
-    when "Enterprise"
-      @choice = @enterprise
-    else 
-      "We're unaware of a plane of that name"
-  end
+  @choice = case selection
+            when "Harrier"
+              @harrier
+            when "Concorde"
+              @concorde
+            when "Jumbo"
+              @jumbo
+            when "Jet"
+              @jet
+            when "Millenium Falcon"
+              @millenium_falcon
+            when "Enterprise"
+              @enterprise
+            else 
+              "We're unaware of a plane of that name"
+          end
 end
 
 def airport_clear_for_takeoff(plane)
@@ -75,9 +75,3 @@ def airport_receive(plane)
 end
 
 interactive_menu
-
-
-#need a way to keep track of planes
-#need a way to make sure you can't land a plane twice(without it flying in between)
-#need to work out how to check for storms
-#and then prevent the result of rand from changing

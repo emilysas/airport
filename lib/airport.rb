@@ -25,15 +25,42 @@ class Airport
   end
 
   def receive(plane)
-    raise "Plane cannot land, the airport is full" if full?
-    raise "Storms ahead, plane not cleared for landing" unless clear_for_takeoff?
-    @planes << plane
+    if full? 
+      full_error
+    elsif clear_for_takeoff?
+      stormy_error("takeoff")  
+    else
+      puts "Cleared for landing"
+      @planes << plane
+      puts "Landed"
+    end
   end
 
   def request_takeoff(plane) 
-    raise "Storms ahead, plane not cleared for takeoff" unless clear_for_takeoff?
-    planes.delete(plane)
-  end 
+    if clear_for_takeoff?
+      stormy_error("land") 
+    else
+      puts "Cleared for takeoff"
+      planes.delete(plane)
+      puts "Flying"
+    end
+  end
+
+  def full_error(request)
+      begin
+        raise RuntimeError
+      rescue
+        puts "Plane cannot land, the airport is full. Please await further instruction"
+      end
+  end
+
+  def stormy_error(request)
+      begin
+        raise RuntimeError
+      rescue
+        puts "Storms ahead, plane not cleared for #{request}. Please wait for the storms to pass"
+      end
+  end
 
   def clear_for_takeoff?
     playing_god

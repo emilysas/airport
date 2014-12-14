@@ -26,7 +26,7 @@ describe Airport do
 
       it 'a plane cannot land if the airport is full' do
         allow(plane).to receive(:land!).with(sunny_airport)
-        expect{51.times{sunny_airport.receive(plane)}}.to raise_error(RuntimeError, "Plane cannot land, the airport is full")
+        expect{51.times{sunny_airport.receive(plane)}}.not_to change{sunny_airport.plane_count}
       end
   end
 
@@ -37,11 +37,11 @@ describe Airport do
 
 
       it 'a plane cannot take off when there is a storm brewing' do
-        expect{ stormy_airport.request_takeoff(plane) }.to raise_error(RuntimeError, "Storms ahead, plane not cleared for takeoff")
+        expect{ stormy_airport.request_takeoff(plane) }.not_to change{stormy_airport.plane_count}
       end
 
       it 'a plane cannot land in the middle of a storm' do
-        expect{ stormy_airport.receive(plane) }.to raise_error(RuntimeError, "Storms ahead, plane not cleared for landing")
+        expect{ stormy_airport.receive(plane) }.not_to change{stormy_airport.plane_count}
       end 
     
   end
