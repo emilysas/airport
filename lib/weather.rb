@@ -1,9 +1,11 @@
 module Weather
 
-  def playing_god
-    weather = Random.new
-    forecast = weather.rand(10)
-    forecast <= 2 ? @stormy = true : @stormy = false
+  def weather 
+    (1..5).to_a.sample == 1 ? "Stormy" : "Sunny"
+  end
+
+  def clear?
+    weather != "Stormy"
   end
 
 end

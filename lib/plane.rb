@@ -3,29 +3,19 @@ require_relative 'airport'
 class Plane
 
   def initialize
-    landed
+    @flying = true
   end
 
   def flying?
     @flying
   end
 
-  def flying
-    @flying = true
-  end
-
-  def landed
-    @flying = false
-  end
-
   def take_off!(airport)
-    airport.request_takeoff(self)
-    flying
+    @flying = true if airport.permit_takeoff(self)
   end
 
   def land!(airport)
-    airport.receive(self)
-    landed
+    @flying = false if airport.receive(self)
   end
 
 end

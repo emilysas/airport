@@ -2,47 +2,46 @@ require './lib/airport.rb'
 
 
 describe Airport do
-  let(:sunny_airport) {Airport.new(:capacity => 50)}
-  let(:stormy_airport){Airport.new(:capacity => 6, :clear_weather => false)}
+  let(:airport){Airport.new(capacity: 50)}
   let(:plane) {double :plane}
   
   context 'taking off and landing' do
     
-    before {allow(sunny_airport).to receive(:playing_god){@stormy = false}}
+    before {allow(airport).to receive(:clear?).and_return(true)}
 
       it 'a plane can land' do
-        expect{sunny_airport.receive(plane)}.to change{sunny_airport.plane_count}.by(1)
+        expect{airport.receive(plane)}.to change{airport.plane_count}.by(1)
       end
 
       it 'a plane can take off' do
-        sunny_airport.receive(plane)
-        expect{sunny_airport.request_takeoff(plane)}.to change{sunny_airport.plane_count}.by(-1)
+        airport.receive(plane)
+        expect{airport.permit_takeoff(plane)}.to change{airport.plane_count}.by(-1)
       end
 
   end
 
   context 'traffic control' do
     
-    before {allow(sunny_airport).to receive(:playing_god){@stormy = false}}
+    before {allow(airport).to receive(:clear?).and_return(true)}
 
       it 'a plane cannot land if the airport is full' do
-        allow(plane).to receive(:land!).with(sunny_airport)
-        50.times{sunny_airport.receive(plane)}
-        expect{sunny_airport.receive(plane)}.not_to change{sunny_airport.plane_count}
+        allow(plane).to receive(:land!).with(airport)
+        50.times{airport.receive(plane)}
+        expect{airport.receive(plane)}.to raise_error("Full")
       end
   end
 
 
   context 'weather conditions' do
 
-    before {allow(stormy_airport).to receive(:clear?){@clear_weather = false}}
+    before {allow(airport).to receive(:clear?).and_return(false)}
 
       it 'a plane cannot take off when there is a storm brewing' do
-        expect{ stormy_airport.request_takeoff(plane) }.not_to change{stormy_airport.plane_count}
+        expect{airport.permit_takeoff(plane) }.to raise_error("Stormy")
       end
 
       it 'a plane cannot land in the middle of a storm' do
-        expect{ stormy_airport.receive(plane) }.not_to change{stormy_airport.plane_count}
+        expect{airport.receive(plane) }.to raise_error("Stormy")
       end 
     
   end
