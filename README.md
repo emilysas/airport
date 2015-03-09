@@ -8,6 +8,9 @@ This was my personal weekend challenge for Week 1 of Makers Academy. The task wa
 * Ruby
 * Rspec
 
+##Lessons Learned
+This personal challenge allowed me to consolidate what I'd learned during the week about object oriented design, encapsulation, inheritence, testing, and mocking.
+
 
 ## Domain Model / CRC
 
